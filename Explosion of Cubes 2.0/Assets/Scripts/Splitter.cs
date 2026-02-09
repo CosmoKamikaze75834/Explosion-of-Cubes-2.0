@@ -12,7 +12,6 @@ public class Splitter : MonoBehaviour
     private int _maxCubs = 6;
     private float _maxChance = 100f;
     private float _minChance = 0f;
-    private float _explosionForce = 500f;
 
     public void Start()
     {
@@ -42,10 +41,12 @@ public class Splitter : MonoBehaviour
 
             SpawnObject(count, cube, children);
 
-            _force.Apply(children, cube.transform.position, _explosionForce);
+            _spawner.DestroyObject(cube);
         }
-
-        _spawner.DestroyObject(cube);
+        else
+        {
+            _force.Explode(cube);
+        }
     }
 
     private void SpawnObject(int count, Cube cube, List<Rigidbody> cubes)
